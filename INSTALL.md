@@ -16,5 +16,54 @@ After you have exported the Excel files from FMP into the data folder. It also a
 ## Load development data
 
 Initially ArchivesSpace is configured but lacking data isn't terribly interesting. These are the steps
-taken to dump a production dataset to use as a development dataset.
+taken to dump a production dataset to use as a development dataset.  
 
+
+### Setup local configuration
+
+The following can be executed from your development machine but should also work from a VM if necessary..
+
+1. Copy setup.conf-example to setup.conf
+2. Edit setup.conf to reflect our local development setup as well as point to the production deployment (so we can grab data for development)
+3. Source the setup.conf
+4. Run utils/create-repository.php
+5. Run utils/generate-snapshot.php
+6. Run utils/load-snapshot.php
+
+Here's an example of what I would type on my Mac in a Terminal window for the whole process
+
+```
+        mkdir git-repos
+        cd git-repos
+        git clone git@github.com:caltechlibrary/archivesspace_vagrant
+        cd archivesspace_vagrant
+        vagrant up
+        vagrant ssh
+        # At this point I've SSH'd to the vagrante virtual machine instance
+        cd /vagrant
+        bash setup/final-installation-step.sh
+        # This take a little while to run, there are some prompts to answer
+        # When complete we'll switch the archivesspace user and start archivesspace
+        sudo su - archivesspace
+        cd /archivesspace
+        ./archivesspace.sh # ArchivesSpace launches and is logging to console.
+```
+
+Start another Terminal Window
+
+```
+        cd git-repos/archivesspace_vagrant
+        cp setup.conf-example setup.conf
+        # Edit setup.conf to fit your setup.
+        vi setup.conf
+        # Now source the setup.conf so we can run our various utilities and pickup the configuration
+        . setup.conf
+        # Generate a new repository
+        php scripts/create-repository.php
+        # Dump some data from the production system to use
+        php scripts/generate-test-data.php
+        # Finally load the tests data so you can do some development
+        php scripts/load-test-data.php
+```
+
+If you've already create your vagrant instance some of the steps con be omitted or abbrivated.
