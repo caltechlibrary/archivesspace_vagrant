@@ -1,0 +1,9 @@
+#
+# this is an example setup configuration for running the API tests.
+#
+export ASPACE_MIGRATION_ROOT=$(pwd)
+export ASPACE_HOST=localhost
+export ASPACE_PORT=8089
+# These should be changed to appropriate values
+export ASPACE_USERNAME=admin
+export ASPACE_PASSWORD=admin
