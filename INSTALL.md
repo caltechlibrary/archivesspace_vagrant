@@ -26,9 +26,9 @@ The following can be executed from your development machine but should also work
 1. Copy setup.conf-example to setup.conf
 2. Edit setup.conf to reflect our local development setup as well as point to the production deployment (so we can grab data for development)
 3. Source the setup.conf
-4. Run utils/create-repository.php
-5. Run utils/generate-snapshot.php
-6. Run utils/load-snapshot.php
+4. Run scripts/create-repository.php
+5. Run scripts/generate-test-data.php
+6. Run scripts/load-test-data.php
 
 Here's an example of what I would type on my Mac in a Terminal window for the whole process
 
