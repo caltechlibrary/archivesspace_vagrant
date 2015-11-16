@@ -65,8 +65,8 @@ function setupArchivesSpace {
     # See https://www.youtube.com/watch?v=peRcBYqJHGc&index=19&list=PLJFitFaE9AY_DDlhl3Kq_vFeX27F1yt6I
     # for Video tutorial for similar steps on Cent OS 6.x
     echo "Adding archivesspace."
-    #REVISION="v1.3.0"
     REVISION="v1.4.1"
+    #REVISION="v1.4.2"
     RELEASE_URL="https://github.com/archivesspace/archivesspace/releases/download/$REVISION/archivesspace-$REVISION.zip"
     ZIP_FILE="/vagrant/archivesspace-$REVISION.zip"
     if [ -f "$ZIP_FILE" ]; then
@@ -114,7 +114,7 @@ function setupFinish {
     echo "    sudo su - archivesspace"
     echo "    cd /archivesspace"
     echo "    ./archivesspace.sh"
-    echo "And you're ready to create a new repository (e.g. groovy utils/repositories.groovy 2 test --create)"
+    echo "And you're ready to create a new repository, load data, and begin development."
     echo ""
 }
 
@@ -123,7 +123,6 @@ function setupFinish {
 #
 assertUsername vagrant "Try: sudo su vagrant"
 setupUsers
-#setupTomcat
 setupArchivesSpace
 setupMySQL
 setupFinish
