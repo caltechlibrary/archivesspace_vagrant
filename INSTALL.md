@@ -26,9 +26,9 @@ The following can be executed from your development machine but should also work
 1. Copy setup.conf-example to setup.conf
 2. Edit setup.conf to reflect our local development setup as well as point to the production deployment (so we can grab data for development)
 3. Source the setup.conf
-4. Run scripts/create-repository.php
-5. Run scripts/generate-test-data.php
-6. Run scripts/load-test-data.php
+4. Run scripts/create-repository.sh
+5. Run scripts/generate-test-data.sh
+6. Run scripts/load-test-data.sh
 
 Here's an example of what I would type on my Mac in a Terminal window for the whole process
 
@@ -59,11 +59,11 @@ Start another Terminal Window
         # Now source the setup.conf so we can run our various utilities and pickup the configuration
         . setup.conf
         # Generate a new repository
-        php scripts/create-repository.php
+        bash scripts/create-repository.sh
         # Dump some data from the production system to use
-        php scripts/generate-test-data.php
+        bash scripts/generate-test-data.sh
         # Finally load the tests data so you can do some development
-        php scripts/load-test-data.php
+        bash scripts/load-test-data.sh
 ```
 
 If you've already create your vagrant instance some of the steps con be omitted or abbrivated.
