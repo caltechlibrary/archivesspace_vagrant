@@ -37,8 +37,6 @@ Here's an example of what I would type on my Mac in a Terminal window for the wh
         cd git-repos
         git clone git@github.com:caltechlibrary/archivesspace_vagrant
         cd archivesspace_vagrant
-        # First time we need to run vagrant init
-        vagrant init
         vagrant up
         vagrant ssh
         # At this point I've SSH'd to the vagrante virtual machine instance
