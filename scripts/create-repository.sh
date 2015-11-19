@@ -28,6 +28,8 @@ if [ -f setup.conf ]; then
     . setup.conf
 else
     echo "create setup.conf based on setup.conf-example"
+    echo "then source setup.conf so the configuration is available via the Unix environment"
+    exit 1
 fi
 
 authenticate

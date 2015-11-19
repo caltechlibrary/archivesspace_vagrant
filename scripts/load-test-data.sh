@@ -15,3 +15,13 @@ function authenticate() {
     echo "Auth token: $session"
     export ASPACE_AUTH_TOKEN=$session
 }
+
+if [ -f setup.conf ]; then
+    echo "Loading configuration from setup.conf"
+    . setup.conf
+else
+    echo "create setup.conf based on setup.conf-example"
+    echo "then source setup.conf so the configuration is available via the Unix environment"
+    exit 1
+fi
+

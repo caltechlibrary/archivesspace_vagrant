@@ -27,7 +27,7 @@ The following can be executed from your development machine but should also work
 2. Edit setup.conf to reflect our local development setup as well as point to the production deployment (so we can grab data for development)
 3. Source the setup.conf
 4. Run scripts/create-repository.sh
-5. Run scripts/generate-test-data.sh
+5. Run scripts/fetch-test-data.sh
 6. Run scripts/load-test-data.sh
 
 Here's an example of what I would type on my Mac in a Terminal window for the whole process
@@ -61,7 +61,7 @@ Start another Terminal Window
         # Generate a new repository
         bash scripts/create-repository.sh
         # Dump some data from the production system to use
-        bash scripts/generate-test-data.sh
+        bash scripts/fetch-test-data.sh
         # Finally load the tests data so you can do some development
         bash scripts/load-test-data.sh
 ```
