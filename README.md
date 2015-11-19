@@ -10,4 +10,9 @@ ArchivesSpace is licensed under the [Educational Community License v2](http://op
 + [REST API Docs](https://archivesspace.github.io/archivesspace/doc/file.API.html) (assumes Ruby and AS JSONModel object, still useful after looking at the screen casts and curl examples)
 + [General documentations](http://archivesspace.github.io/archivesspace/doc/)
 
+## Dependencies
+
++ Vagrant and all that is needed to run vagrant (e.g. Virtual Box)
+    + ArchivesSpace release and its dependencies (this are handled in the VM creation and setup)
++ Bash (for the scripts)
 
