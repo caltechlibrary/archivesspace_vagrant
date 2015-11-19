@@ -88,21 +88,20 @@ Vagrant.configure(2) do |config|
   #   sudo apt-get install -y apache2
   # SHELL
   config.vm.provision "shell", inline: <<-SHELL
-    # Make sure everything so far is up to date.
-    #sudo yum -y upgrade # do I really need to run an update?
     # Setup the base system with development tools
+    sudo yum -y install git
     sudo yum -y install curl
     sudo yum -y install zip unzip
     sudo yum -y install epel-release
     sudo yum -y install deltarpm
-    # Install Java 1.8 and related tools
+    # Install Java 1.7 and related tools
     sudo yum -y install java-1.7.0-openjdk-devel.x86_64 java-1.7.0-openjdk-javadoc.noarch
     sudo yum -y install ant-javadoc.noarch ant-contrib-javadoc.noarch ant-antunit-javadoc.noarch
     sudo yum -y install maven.noarch
     # Setup and install MySQL server from Oracle.
     sudo rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
     sudo yum -y install mysql-server
-    sudo adduser archivesspace
+    #sudo adduser archivesspace
     echo ""
     echo "\Run "
     echo "    vagrant ssh"

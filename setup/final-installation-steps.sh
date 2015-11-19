@@ -65,8 +65,7 @@ function setupArchivesSpace {
     # See https://www.youtube.com/watch?v=peRcBYqJHGc&index=19&list=PLJFitFaE9AY_DDlhl3Kq_vFeX27F1yt6I
     # for Video tutorial for similar steps on Cent OS 6.x
     echo "Adding archivesspace."
-    REVISION="v1.4.1"
-    #REVISION="v1.4.2"
+    REVISION="v1.4.2"
     RELEASE_URL="https://github.com/archivesspace/archivesspace/releases/download/$REVISION/archivesspace-$REVISION.zip"
     ZIP_FILE="/vagrant/archivesspace-$REVISION.zip"
     if [ -f "$ZIP_FILE" ]; then
@@ -97,6 +96,16 @@ function setupArchivesSpace {
     sudo chkconfig --level 3 archivesspace on
 }
 
+function setupGoSpaceSourceCode {
+    cd
+    mkdir -p src
+    cd src
+    git clone https://github.com/rsdoiel/gospace.git
+    echo "Source for gospace was installed in $HOME/src/gospace"
+    echo "You will need Golang 1.5 or better installed to compile and install it"
+    echo "    cd $HOME/src/gospace && bash install.sh"
+}
+
 function setupFinish {
     cd
     mkdir bin
@@ -125,4 +134,5 @@ assertUsername vagrant "Try: sudo su vagrant"
 setupUsers
 setupArchivesSpace
 setupMySQL
+setupGoSpaceSourceCode
 setupFinish
