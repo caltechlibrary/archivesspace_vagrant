@@ -9,8 +9,8 @@ After you have exported the Excel files from FMP into the data folder. It also a
         -       vagrant up
 2.      SSH into vagrant instance
         -       vagrant ssh
-3.      Change to the /vagrant directory and run the final-installation-step.sh
-        -       cd /vagrant && bash setup/final-installation-step.sh
+3.      Change to the sync directory and run the final-installation-step.sh
+        -       cd $HOME/sync && bash setup/final-installation-step.sh
 4.      Wait for AS to startup and point your browser at http://localhost:8080 to confirm
 
 ## Load development data
