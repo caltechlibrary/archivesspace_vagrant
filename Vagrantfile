@@ -33,8 +33,8 @@ Vagrant.configure(2) do |config|
   # forward the Solr admin site
   config.vm.network "forwarded_port", guest: 8090, host: 8090
   # forward NginX
-  config.vm.network "forwarded_port", guest: 8000, host: 80
-  config.vm.network "forwarded_port", guest: 8443, host: 443
+  #config.vm.network "forwarded_port", guest: 80, host: 8000
+  #config.vm.network "forwarded_port", guest: 443, host: 8443
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -102,7 +102,9 @@ Vagrant.configure(2) do |config|
     sudo yum -y install ant-javadoc.noarch ant-contrib-javadoc.noarch ant-antunit-javadoc.noarch
     sudo yum -y install maven.noarch
     # Setup and install NginX
-    sudo yum -y install nginx
+    #sudo yum -y install nginx
+    #sudo systemctl start nginx.service
+    #sudo systemctl enable nginx
     # Setup and install MySQL server from Oracle.
     sudo rpm -Uvh http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
     sudo yum -y install mysql-server
