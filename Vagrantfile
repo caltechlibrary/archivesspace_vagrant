@@ -103,9 +103,9 @@ Vagrant.configure(2) do |config|
     sudo yum -y install mysql-server
     #sudo adduser archivesspace
     echo ""
-    echo "\Run "
+    echo "Execute "
     echo "    vagrant ssh"
-    echo " and then run"
+    echo "and then execute"
     echo "    cd /vagrant && bash setup/final-installation-steps.sh"
     echo "To complete the installation."
     echo ""
