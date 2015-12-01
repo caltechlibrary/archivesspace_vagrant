@@ -67,7 +67,7 @@ function setupArchivesSpace {
     echo "Adding archivesspace."
     REVISION="v1.4.2"
     RELEASE_URL="https://github.com/archivesspace/archivesspace/releases/download/$REVISION/archivesspace-$REVISION.zip"
-    ZIP_FILE="/vagrant/archivesspace-$REVISION.zip"
+    ZIP_FILE="$HOME/sync/archivesspace-$REVISION.zip"
     if [ -f "$ZIP_FILE" ]; then
         echo "Using existing $ZIP_FILE"
     else
@@ -109,8 +109,8 @@ function setupGoSpaceSourceCode {
 function setupFinish {
     cd
     mkdir bin
-    cp -v /vagrant/setup/reset-archivesspace.sh bin/
-    cp -vR /vagrant/tests ./
+    cp -v $HOME/sync/setup/reset-archivesspace.sh bin/
+    cp -vR $HOME/sync/tests ./
     sudo chown -R archivesspace /usr/local/archivesspace
     echo ""
     echo "Web Access:"
