@@ -15,9 +15,10 @@ sudo rm -rf data/frontend_cookie_secret_cookie_secret.dat \
 	data/solr_index/* data/tmp/*
 
 echo
-echo "Ready to create a new ArchivesSpace DB"
-echo "Change directory to /archivesspace"
-echo "Run scripts/setup-database.sh"
-echo
-echo "Afterwards you can run ./archivesspace.sh to start the services"
+echo "Ready to create a new ArchivesSpace DB environment"
+echo ""
+echo -e "\tsudo su - archivesspace"
+echo -e "\tcd /archivesspace"
+echo -e "\tbash scripts/setup-database.sh"
+echo -e "\t./archivesspace.sh"
 echo
