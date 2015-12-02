@@ -88,18 +88,7 @@ function setupArchivesSpace {
     sudo chown $USER config/config.rb
     echo 'AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as&password=as123&useUnicode=true&characterEncoding=UTF-8"' >> config/config.rb
     echo 'AppConfig[:compile_jasper] = true' >> config/config.rb
-
-    # Setup Jasper reports Add the Microsoft TTF fonts required to run them.
-    PREV_DIR=$(pwd)
-    cd
     echo 'AppConfig[:enable_jasper] = true' >> config/config.rb
-    curl -O http://thelinuxbox.org/downloads/fonts/msttcorefonts.tar.gz
-    tar zxvf msttcorefonts.tar.gz
-    sudo mkdir -p /usr/share/fonts/TTF
-    sudo cp msttcorefonts/*.ttf /usr/share/fonts/TTF/
-    rm -fR msttcorefonts
-    sudo fc-cache -fv
-    cd $PREV_DIR
 
     echo "Update ownership to be archivesspace user."
     sudo chown -R archivesspace.archivesspace /usr/local/archivesspace
@@ -108,6 +97,20 @@ function setupArchivesSpace {
     sudo ln -s /usr/local/archivesspace/archivesspace.sh /etc/init.d/archivesspace
     sudo sed --in-place=.original -e "s/ARCHIVESSPACE_USER=/ARCHIVESSPACE_USER=archivesspace/g" /usr/local/archivesspace/archivesspace.sh
     sudo chkconfig --level 3 archivesspace on
+}
+
+function setupJasperReportsFonts {
+    # Setup Jasper reports Add the TTF fonts required to run them.
+    cd
+    echo "Downloading the TTF fonts"
+    curl -O http://thelinuxbox.org/downloads/fonts/msttcorefonts.tar.gz
+    echo "Unpacking the TTF fonts"
+    tar zxvf msttcorefonts.tar.gz
+    echo "Moving them into /usr/share/fonts/TTF"
+    sudo mkdir -p /usr/share/fonts/TTF
+    sudo cp msttcorefonts/*.ttf /usr/share/fonts/TTF/
+    echo "Updating the font cache"
+    sudo fc-cache -fv
 }
 
 function setupGoSpaceSourceCode {
@@ -148,5 +151,6 @@ assertUsername vagrant "Try: sudo su vagrant"
 setupUsers
 setupArchivesSpace
 setupMySQL
+setupJasperReportsFonts
 setupGoSpaceSourceCode
 setupFinish
