@@ -90,6 +90,8 @@ function setupArchivesSpace {
     echo 'AppConfig[:compile_jasper] = true' >> config/config.rb
 
     # Setup Jasper reports Add the Microsoft TTF fonts required to run them.
+    PREV_DIR=$(pwd)
+    cd
     echo 'AppConfig[:enable_jasper] = true' >> config/config.rb
     curl -O http://thelinuxbox.org/downloads/fonts/msttcorefonts.tar.gz
     tar zxvf msttcorefonts.tar.gz
@@ -97,6 +99,7 @@ function setupArchivesSpace {
     sudo cp msttcorefonts/*.ttf /usr/share/fonts/TTF/
     rm -fR msttcorefonts
     sudo fc-cache -fv
+    cd $PREV_DIR
 
     echo "Update ownership to be archivesspace user."
     sudo chown -R archivesspace.archivesspace /usr/local/archivesspace
