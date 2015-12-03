@@ -16,3 +16,7 @@ ArchivesSpace is licensed under the [Educational Community License v2](http://op
     + ArchivesSpace release and its dependencies (this are handled in the VM creation and setup)
 + Bash (for the scripts)
 
+## Misc
+
++ [Instructurions for Shib integration](https://github.com/archivesspace/archivesspace/blob/master/backend/Authentication.md)
+
