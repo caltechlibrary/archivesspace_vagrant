@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ "$USER" != "vagrant" ]; then
-	echo "Run this script as the vagrant user."
+if [ "$USER" != "vagrant" ] && [ "$USER" != "root" ]; then
+	echo "Run this script as the vagrant or root user."
 	exit 1
 fi
 
