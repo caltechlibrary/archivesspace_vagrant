@@ -18,7 +18,10 @@ echo
 echo "Ready to create a new ArchivesSpace DB environment"
 echo ""
 echo -e "\tsudo su - archivesspace"
-echo -e "\tcd /archivesspace"
-echo -e "\tbash scripts/setup-database.sh"
-echo -e "\t./archivesspace.sh"
-echo
+echo -e "\tcd /archivesspace && bash scripts/setup-database.sh && exit"
+echo ""
+echo "Then you can start ArchivesSpace in the usual way"
+echo ""
+echo -e "\tsudo /etc/init.d/archivesspace start"
+echo ""
+

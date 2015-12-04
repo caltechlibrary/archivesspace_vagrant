@@ -137,9 +137,9 @@ function setupFinish {
     echo "    http://localhost:8090/ -- the Solr admin console"
     echo ""
     echo "Bring up archivespace by "
-    echo "    sudo su - archivesspace"
-    echo "    cd /archivesspace"
-    echo "    ./archivesspace.sh"
+    echo ""
+    echo "    sudo /etc/init.d/archivesspace start
+    echo ""
     echo "And you're ready to create a new repository, load data, and begin development."
     echo ""
 }
