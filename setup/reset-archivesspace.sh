@@ -6,7 +6,7 @@ if [ "$USER" != "vagrant" ] && [ "$USER" != "root" ]; then
 fi
 
 echo "Drop and create a blank DB"
-echo "DROP DATABASE IF EXISTS archivessapce;CREATE DATABASE IF NOT EXISTS archivesspace;" | mysql
+echo "DROP DATABASE IF EXISTS archivessapce;CREATE DATABASE IF NOT EXISTS archivesspace;" | sudo mysql
 echo "Clear any Solr indexes"
 cd /archivesspace
 sudo rm -rf data/frontend_cookie_secret_cookie_secret.dat \
