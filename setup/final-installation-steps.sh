@@ -113,14 +113,14 @@ function setupJasperReportsFonts {
     sudo fc-cache -fv
 }
 
-function setupGoSpaceSourceCode {
+function setupASpaceSourceCode {
     cd
     mkdir -p src
     cd src
-    git clone https://github.com/rsdoiel/gospace.git
-    echo "Source for gospace was installed in $HOME/src/gospace"
+    git clone https://github.com/rsdoiel/aspace.git
+    echo "Source for gospace was installed in $HOME/src/aspace"
     echo "You will need Golang 1.5 or better installed to compile and install it"
-    echo "    cd $HOME/src/gospace && bash install.sh"
+    echo "    cd $HOME/src/aspace && make install"
 }
 
 function setupFinish {
@@ -138,7 +138,7 @@ function setupFinish {
     echo ""
     echo "Bring up archivespace by "
     echo ""
-    echo "    sudo /etc/init.d/archivesspace start
+    echo "    sudo /etc/init.d/archivesspace start"
     echo ""
     echo "And you're ready to create a new repository, load data, and begin development."
     echo ""
@@ -152,5 +152,5 @@ setupUsers
 setupArchivesSpace
 setupMySQL
 setupJasperReportsFonts
-setupGoSpaceSourceCode
+#setupASpaceSourceCode
 setupFinish
