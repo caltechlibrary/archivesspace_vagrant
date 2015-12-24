@@ -79,6 +79,8 @@ function setupArchivesSpace {
     echo "Unpacking $ZIP_FILE"
     sudo unzip $ZIP_FILE
     sudo ln -s /usr/local/archivesspace /archivesspace
+    # RedHat/centos needs to link with chkconfig, debian does something else..
+    sudo chkconfig --add /etc/init.d/archivesspace
     echo "Copy in MySQL Java connection."
     cd /usr/local/archivesspace/lib
     sudo curl -Oq http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar
