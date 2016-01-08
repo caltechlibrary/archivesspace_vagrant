@@ -131,15 +131,8 @@ function setupNginX {
     sudo yum -y remove httpd
     #sudo yum -y update
     sudo yum -y install nginx
-    # Create a sites configuration folder under /etc/nginx/ if needed.
-    # Add to main NginX config if needed.
-    sudo mkdir -p /etc/nginx/sites/
-    RESULTS=$(grep "include /etc/nginx/sites/\*;" /etc/nginx/nginx.conf)
-    if [ "$RESULTS" = "" ]; then
-        sudo sed -i -e '$ a # including our dev setup' -e '$ a include /etc/nginx/sites/*;' /etc/nginx/nginx.conf
-    fi
-    # Add our dev setup to sites
-    sudo cp -v $HOME/sync/etc/nginx/sites/dev-test /etc/nginx/sites/
+    # Add our side to NingX's conf./
+    sudo cp -v $HOME/sync/etc/nginx/conf.d/dev-test.conf /etc/nginx/conf.d/
     # Now start things up.
     sudo systemctl nginx start
     sudo systemctl nginx enable
