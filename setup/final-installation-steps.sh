@@ -125,6 +125,19 @@ function setupASpaceSourceCode {
     echo "    cd $HOME/src/aspace && make install"
 }
 
+function setupNginX {   
+    # Create a sites configuration folder under /etc/nginx/ if needed.
+    # Add to main NginX config if needed.
+    mkdir -p /etc/nginx/sites/
+    RESULTS=$(grep 'include /etc/nginx/sites/*;' /etc/nginx/nginx.conf)
+    if [ "$RESULTS" = "" ]; then
+        echo '# including our dev setup' >> /etc/nginx/nginx.conf
+        echo 'include /etc/nginx/sites/*;' >> /etc/nginx/nginx.conf
+    fi
+    # Add our dev setup to sites
+    cp -v $HOME/sync/etc/nginx/sites/dev-test /etc/nginx/sites/
+}
+
 function setupFinish {
     cd
     mkdir bin
@@ -137,10 +150,15 @@ function setupFinish {
     echo "    http://localhost:8080/ -- the staff interface"
     echo "    http://localhost:8081/ -- the public interface"
     echo "    http://localhost:8090/ -- the Solr admin console"
+    echo "    http://localhost:8000/ -- ArchivesSpace behind NginX"
     echo ""
     echo "Bring up archivespace by "
     echo ""
     echo "    sudo /etc/init.d/archivesspace start"
+    echo ""
+    echo "Bring up Nginx by "
+    echo ""
+    echo "    sudo /etc/init.d/nginx start"
     echo ""
     echo "And you're ready to create a new repository, load data, and begin development."
     echo ""
@@ -154,5 +172,6 @@ setupUsers
 setupArchivesSpace
 setupMySQL
 setupJasperReportsFonts
+setupNginX
 #setupASpaceSourceCode
 setupFinish
