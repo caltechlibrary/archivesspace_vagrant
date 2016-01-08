@@ -17,6 +17,7 @@ hs_err_pid*
 *~
 .vagrant
 log/
+logs/
 data/
 user-data
 config.rb
@@ -28,3 +29,4 @@ config.rb
 *.conf
 *.log
 *.zip
+*.tar
