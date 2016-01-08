@@ -131,8 +131,8 @@ function setupNginX {
     sudo yum -y remove httpd
     #sudo yum -y update
     sudo yum -y install nginx
-    # Add our side to NingX's conf./
-    sudo cp -v $HOME/sync/etc/nginx/conf.d/dev-test.conf /etc/nginx/conf.d/
+    # Add our site's to NingX conf./
+    sudo cp -v $HOME/sync/etc/nginx/sites/archivesspace_dev.conf /etc/nginx/conf.d/
     # Now start things up.
     sudo systemctl nginx start
     sudo systemctl nginx enable
