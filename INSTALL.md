@@ -16,19 +16,10 @@ After you have exported the Excel files from FMP into the data folder. It also a
 ## Load development data
 
 Initially ArchivesSpace is configured but lacking data isn't terribly interesting. These are the steps
-taken to dump a production dataset to use as a development dataset.  
+taken to dump a production dataset to use as a development dataset.
 
 
-### Setup local configuration
-
-The following can be executed from your development machine but should also work from a VM if necessary..
-
-1. Copy setup.conf-example to setup.conf
-2. Edit setup.conf to reflect our local development setup as well as point to the production deployment (so we can grab data for development)
-3. Source the setup.conf
-4. Run scripts/create-repository.sh
-5. Run scripts/fetch-test-data.sh
-6. Run scripts/load-test-data.sh
+### Example local setup
 
 Here's an example of what I would type on my Mac in a Terminal window for the whole process
 
@@ -40,30 +31,35 @@ Here's an example of what I would type on my Mac in a Terminal window for the wh
         vagrant up
         vagrant ssh
         # At this point I've SSH'd to the vagrante virtual machine instance
-        cd /vagrant
         bash setup/final-installation-step.sh
         # This take a little while to run, there are some prompts to answer
         # When complete we'll switch the archivesspace user and start archivesspace
-        sudo su - archivesspace
-        cd /archivesspace
-        ./archivesspace.sh # ArchivesSpace launches and is logging to console.
+        sudo /etc/init.d/archivesspace # ArchivesSpace launches daemon, logging is in log/archivesspace.out
 ```
 
-Start another Terminal Window
+To populate the dev instance with data I usually use a snapshot of our producton deployment's MySQL database. This can be done using mysqldump. 
+If I have saved my archivesspace MySQL dump as the file named _as-backup.sql_ I would do the following to load it into my dev environment
 
 ```
-        cd git-repos/archivesspace_vagrant
-        cp setup.conf-example setup.conf
-        # Edit setup.conf to fit your setup.
-        vi setup.conf
-        # Now source the setup.conf so we can run our various utilities and pickup the configuration
-        . setup.conf
-        # Generate a new repository
-        bash scripts/create-repository.sh
-        # Dump some data from the production system to use
-        bash scripts/fetch-test-data.sh
-        # Finally load the tests data so you can do some development
-        bash scripts/load-test-data.sh
+    vagrant up 
+    vagrant ssh
+    # Copy the as-backup.sql file to the vagrant instance
+    # replace USERNAME@HOSTNAME with your username host of your dev box
+    scp USERNAME@HOSTNAME:./as-backup.sql  ./
+    # Drop down to root of virtual box to re-create the ArchivesSpace database
+    sudo su
+    mysql archivesspace
+    # At this point you are int he mysql repl
+    DROP DATABASE archivesspace;
+    CREATE DATABASE archivesspace;
+    USE archivesspace
+    source /home/vagrant/as-backup.sql
+    # you should now have a copy of the production data loaded
+    quit
+    # you are back at the Unix shell prompt
+    # Remove the data/solr/indexer_state/* files to cause Solr to your index everything
+    sudo rm -fR /archivesspace/data/indexer_state/*
+    # Restart archivesspace, this takes a while as it re-index everything
+    sudo /etc/init.d/archivesspace restart
 ```
 
-If you've already create your vagrant instance some of the steps con be omitted or abbrivated.
