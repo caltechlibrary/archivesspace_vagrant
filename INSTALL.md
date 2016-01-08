@@ -38,14 +38,14 @@ Here's an example of what I would type on my Mac in a Terminal window for the wh
 ```
 
 To populate the dev instance with data I usually use a snapshot of our producton deployment's MySQL database. This can be done using mysqldump. 
-If I have saved my archivesspace MySQL dump as the file named _as-backup.sql_ I would do the following to load it into my dev environment
+If I have saved my archivesspace MySQL dump as the file named _archivesspace-backup.sql_ I would do the following to load it into my dev environment
 
 ```
     vagrant up 
     vagrant ssh
     # Copy the as-backup.sql file to the vagrant instance
     # replace USERNAME@HOSTNAME with your username host of your dev box
-    scp USERNAME@HOSTNAME:./as-backup.sql  ./
+    scp USERNAME@HOSTNAME:./archivesspace-backup.sql  ./
     # Drop down to root of virtual box to re-create the ArchivesSpace database
     sudo su
     mysql archivesspace
@@ -53,13 +53,14 @@ If I have saved my archivesspace MySQL dump as the file named _as-backup.sql_ I 
     DROP DATABASE archivesspace;
     CREATE DATABASE archivesspace;
     USE archivesspace
-    source /home/vagrant/as-backup.sql
+    source /home/vagrant/archivesspace-backup.sql
     # you should now have a copy of the production data loaded
     quit
     # you are back at the Unix shell prompt
     # Remove the data/solr/indexer_state/* files to cause Solr to your index everything
     sudo rm -fR /archivesspace/data/indexer_state/*
     # Restart archivesspace, this takes a while as it re-index everything
-    sudo /etc/init.d/archivesspace restart
+    sudo /etc/init.d/archivesspace stop
+    sudo /etc/init.d/archivesspace start
 ```
 
