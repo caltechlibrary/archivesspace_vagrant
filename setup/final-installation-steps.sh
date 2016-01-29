@@ -25,11 +25,6 @@ function setupUsers {
     sudo usermod -G vagrant,archivesspace vagrant
 }
 
-function setupTomcat {
-    echo "Setting up Tomcat to start on reboot"
-    sudo systemctl enable tomcatd
-}
-
 #
 # Setup MySQL appropriately
 #
@@ -119,13 +114,33 @@ function setupASpaceSourceCode {
     cd
     mkdir -p src
     cd src
-    git clone https://github.com/rsdoiel/aspace.git
+    git clone https://github.com/caltechlibrary/aspace.git
     echo "Source for gospace was installed in $HOME/src/aspace"
     echo "You will need Golang 1.5 or better installed to compile and install it"
     echo "    cd $HOME/src/aspace && make install"
 }
 
-function setupNginX {   
+function setupGolang {
+    # Save the path variable state
+    OLD_PATH=$PATH
+    cd
+    git clone https://github.com/golang/go go1.4
+    cd go1.4
+    git checkout go1.4.2
+    cd src
+    ./all.bash
+    cd
+    export PATH=$HOME/go1.4/bin:$PATH
+    git clone https://github.com/golang/go
+    cd go
+    git checkout go1.5.3
+    cd src
+    ./all.bash
+    # Restore the path variable state
+    export PATH=$OLD_PATH
+}
+
+function setupNginX {
     # Remove legacy Archive
     sudo cp $HOME/sync/etc/yum.repos.d/nginx.repo /etc/yum.repos.d/
     sudo yum -y remove httpd
@@ -173,5 +188,6 @@ setupArchivesSpace
 setupMySQL
 setupJasperReportsFonts
 #setupNginX
+#setupGolang
 #setupASpaceSourceCode
 setupFinish
