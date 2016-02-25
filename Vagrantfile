@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "centos/7"
+  config.vm.box = "bento/centos-7.2"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -95,7 +95,7 @@ Vagrant.configure(2) do |config|
     sudo yum -y install git
     sudo yum -y install curl
     sudo yum -y install zip unzip
-    sudo yum -y install epel-release
+    #sudo yum -y install epel-release
     sudo yum -y install deltarpm
     # Install Java 1.7 and related tools
     sudo yum -y install java-1.7.0-openjdk-devel.x86_64 java-1.7.0-openjdk-javadoc.noarch
@@ -108,7 +108,7 @@ Vagrant.configure(2) do |config|
     echo ' Run'
     echo '    vagrant ssh'
     echo ' and then run'
-    echo '    cd $HOME/sync && bash setup/final-installation-steps.sh'
+    echo '    cd /vagrant && bash setup/final-installation-steps.sh'
     echo ' To complete the installation.'
     echo ''
     echo ''

@@ -62,7 +62,7 @@ function setupArchivesSpace {
     echo "Adding archivesspace."
     REVISION="v1.4.2"
     RELEASE_URL="https://github.com/archivesspace/archivesspace/releases/download/$REVISION/archivesspace-$REVISION.zip"
-    ZIP_FILE="$HOME/sync/archivesspace-$REVISION.zip"
+    ZIP_FILE="/vagrant/archivesspace-$REVISION.zip"
     if [ -f "$ZIP_FILE" ]; then
         echo "Using existing $ZIP_FILE"
     else
@@ -110,54 +110,11 @@ function setupJasperReportsFonts {
     sudo fc-cache -fv
 }
 
-function setupASpaceSourceCode {
-    cd
-    mkdir -p src
-    cd src
-    git clone https://github.com/caltechlibrary/aspace.git
-    echo "Source for gospace was installed in $HOME/src/aspace"
-    echo "You will need Golang 1.5 or better installed to compile and install it"
-    echo "    cd $HOME/src/aspace && make install"
-}
-
-function setupGolang {
-    # Save the path variable state
-    OLD_PATH=$PATH
-    cd
-    git clone https://github.com/golang/go go1.4
-    cd go1.4
-    git checkout go1.4.2
-    cd src
-    ./all.bash
-    cd
-    export PATH=$HOME/go1.4/bin:$PATH
-    git clone https://github.com/golang/go
-    cd go
-    git checkout go1.5.3
-    cd src
-    ./all.bash
-    # Restore the path variable state
-    export PATH=$OLD_PATH
-}
-
-function setupNginX {
-    # Remove legacy Archive
-    sudo cp $HOME/sync/etc/yum.repos.d/nginx.repo /etc/yum.repos.d/
-    sudo yum -y remove httpd
-    #sudo yum -y update
-    sudo yum -y install nginx
-    # Add our site's to NingX conf./
-    sudo cp -v $HOME/sync/etc/nginx/sites/archivesspace_dev.conf /etc/nginx/conf.d/
-    # Now start things up.
-    sudo systemctl nginx start
-    sudo systemctl nginx enable
-}
-
 function setupFinish {
     cd
     mkdir bin
-    cp -v $HOME/sync/setup/reset-archivesspace.sh bin/
-    cp -vR $HOME/sync/tests ./
+    cp -v /vagrant/setup/reset-archivesspace.sh bin/
+    cp -vR /vagrant/tests ./
     sudo chown -R archivesspace /usr/local/archivesspace
     echo ""
     echo "Web Access:"
@@ -165,16 +122,11 @@ function setupFinish {
     echo "    http://localhost:8080/ -- the staff interface"
     echo "    http://localhost:8081/ -- the public interface"
     echo "    http://localhost:8090/ -- the Solr admin console"
-    #echo "    http://localhost:8000/ -- ArchivesSpace behind NginX"
     echo ""
     echo "Bring up archivespace by "
     echo ""
     echo "    sudo /etc/init.d/archivesspace start"
     echo ""
-    #echo "Restart Nginx by "
-    #echo ""
-    #echo "    sudo systemctl restart nginx"
-    #echo ""
     echo "And you're ready to create a new repository, load data, and begin development."
     echo ""
 }
@@ -187,7 +139,4 @@ setupUsers
 setupArchivesSpace
 setupMySQL
 setupJasperReportsFonts
-#setupNginX
-#setupGolang
-#setupASpaceSourceCode
 setupFinish
