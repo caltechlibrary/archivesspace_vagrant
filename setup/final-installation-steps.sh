@@ -4,7 +4,7 @@
 #
 # Basic Configuration
 #
-export ARCHIVESSPACE_REVISION="v1.4.2"
+export ARCHIVESSPACE_REVISION="v1.5.0-RC2"
 export ARCHIVESSPACE_INSTALL_DIRECTORY="/opt/archivesspace-$ARCHIVESSPACE_REVISION"
 
 #
