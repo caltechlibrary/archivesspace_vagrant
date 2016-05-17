@@ -1,6 +1,15 @@
 #!/bin/bash
 #
 
+#
+# Basic Configuration
+#
+export ARCHIVESSPACE_REVISION="v1.4.2"
+export ARCHIVESSPACE_INSTALL_DIRECTORY="/opt/archivesspace-$ARCHIVESSPACE_REVISION"
+
+#
+# Below should remain the same for supported versions
+#
 function assertUsername {
     USERNAME=$1
     ERROR_MSG=$2
@@ -42,7 +51,7 @@ function setupMySQL {
         echo "FLUSH PRIVILEGES;" >> archivesspace-mysql-setup.sql
         sudo mysql < archivesspace-mysql-setup.sql
         echo "Running the ArchivesSpace setup-database.sh script"
-        cd /usr/local/archivesspace
+        cd $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace
         bash scripts/setup-database.sh
         cd
         # Now make things more secure.
@@ -60,7 +69,7 @@ function setupArchivesSpace {
     # See https://www.youtube.com/watch?v=peRcBYqJHGc&index=19&list=PLJFitFaE9AY_DDlhl3Kq_vFeX27F1yt6I
     # for Video tutorial for similar steps on Cent OS 6.x
     echo "Adding archivesspace."
-    REVISION="v1.4.2"
+    REVISION="$ARCHIVESSPACE_REVISION"
     RELEASE_URL="https://github.com/archivesspace/archivesspace/releases/download/$REVISION/archivesspace-$REVISION.zip"
     ZIP_FILE="/vagrant/archivesspace-$REVISION.zip"
     if [ -f "$ZIP_FILE" ]; then
@@ -70,29 +79,32 @@ function setupArchivesSpace {
         echo "$RELEASE_URL"
         curl -L -k -O --url $RELEASE_URL
     fi
-    cd /usr/local/
+    if [ ! -d "$ARCHIVESSPACE_INSTALL_DIRECTORY" ]; then
+        sudo mkdir -p "$ARCHIVESSPACE_INSTALL_DIRECTORY"
+    fi
+    cd $ARCHIVESSPACE_INSTALL_DIRECTORY/
     echo "Unpacking $ZIP_FILE"
     sudo unzip $ZIP_FILE
-    sudo ln -s /usr/local/archivesspace /archivesspace
+    sudo ln -s $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace /archivesspace
     # RedHat/centos needs to link with chkconfig, debian does something else..
     sudo chkconfig --add /etc/init.d/archivesspace
     echo "Copy in MySQL Java connection."
-    cd /usr/local/archivesspace/lib
+    cd $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace/lib
     sudo curl -Oq http://central.maven.org/maven2/mysql/mysql-connector-java/5.1.35/mysql-connector-java-5.1.35.jar
     # Setup MySQL connector for use with ArchivesSpace
     # Update config/config.rb
-    cd /usr/local/archivesspace
+    cd $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace
     sudo chown $USER config/config.rb
     echo 'AppConfig[:db_url] = "jdbc:mysql://localhost:3306/archivesspace?user=as&password=as123&useUnicode=true&characterEncoding=UTF-8"' >> config/config.rb
     echo 'AppConfig[:compile_jasper] = true' >> config/config.rb
     echo 'AppConfig[:enable_jasper] = true' >> config/config.rb
 
     echo "Update ownership to be archivesspace user."
-    sudo chown -R archivesspace.archivesspace /usr/local/archivesspace
-    sudo chcon -R -h -t httpd_sys_script_rw_t /usr/local/archivesspace
+    sudo chown -R archivesspace.archivesspace $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace
+    sudo chcon -R -h -t httpd_sys_script_rw_t $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace
     # Finally make ArchivesSpace come up on boot as archivesspace user.
-    sudo ln -s /usr/local/archivesspace/archivesspace.sh /etc/init.d/archivesspace
-    sudo sed --in-place=.original -e "s/ARCHIVESSPACE_USER=/ARCHIVESSPACE_USER=archivesspace/g" /usr/local/archivesspace/archivesspace.sh
+    sudo ln -s $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace/archivesspace.sh /etc/init.d/archivesspace
+    sudo sed --in-place=.original -e "s/ARCHIVESSPACE_USER=/ARCHIVESSPACE_USER=archivesspace/g" $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace/archivesspace.sh
     sudo chkconfig --level 3 archivesspace on
 }
 
@@ -115,7 +127,7 @@ function setupFinish {
     mkdir bin
     cp -v /vagrant/setup/reset-archivesspace.sh bin/
     cp -vR /vagrant/tests ./
-    sudo chown -R archivesspace /usr/local/archivesspace
+    sudo chown -R archivesspace $ARCHIVESSPACE_INSTALL_DIRECTORY/archivesspace
     echo ""
     echo "Web Access:"
     echo "    http://localhost:8089/ -- the backend"
