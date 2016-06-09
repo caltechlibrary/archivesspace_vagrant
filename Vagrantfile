@@ -33,7 +33,7 @@ Vagrant.configure(2) do |config|
   # forward the Solr admin site
   config.vm.network "forwarded_port", guest: 8090, host: 8090
   # forward the MySQL port if developing Jasper reports.
-  # config.vm.network "forwarded_prot", guest: 3306, host: 3306
+  #config.vm.network "forwarded_port", guest: 3306, host: 3306
   # forward NginX
   #config.vm.network "forwarded_port", guest: 80, host: 8000
   #config.vm.network "forwarded_port", guest: 443, host: 8443
