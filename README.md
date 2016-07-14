@@ -18,5 +18,5 @@ ArchivesSpace is licensed under the [Educational Community License v2](http://op
 
 ## Misc
 
-+ [Instructurions for Shib integration](https://github.com/archivesspace/archivesspace/blob/master/backend/Authentication.md)
++ [Instructions for Shib integration](https://github.com/archivesspace/archivesspace/blob/master/backend/Authentication.md)
 
