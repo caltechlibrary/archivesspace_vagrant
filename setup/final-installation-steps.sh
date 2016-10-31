@@ -29,6 +29,17 @@ function assertUsername {
     fi
 }
 
+function setupRequiredSoftware {
+    sudo apt-get update && sudo apt-get upgrade -y
+    # Setup the base system with development tools
+    sudo apt-get install -y git-core curl zip unzip
+    # Install Java 1.7 or better and related tools
+    sudo apt-get install -y openjdk-8-jdk openjdk-8-jre 
+    sudo apt-get install -y ant ant-contrib maven
+    # Setup and install MySQL server from Oracle.
+    sudo apt-get install -y mysql-server mysql-client
+}
+
 function setupUsers {
     sudo adduser archivesspace
     sudo usermod -G vagrant,archivesspace vagrant
@@ -44,7 +55,6 @@ function setupMySQL {
 
     if [ "$Y_OR_N" = "" ] || [ "$Y_OR_N" = "y" ] || [ "$Y_OR_N" = "Y" ]; then
         echo "Setting up MySQL users and creating database"
-        sudo systemctl start mysqld.service
         touch archivesspace-mysql-setup.sql
         echo "CREATE DATABASE archivesspace DEFAULT CHARACTER SET utf8;" >> archivesspace-mysql-setup.sql
         echo "GRANT ALL ON archivesspace.* TO 'as'@'localhost' IDENTIFIED BY 'as123';" >> archivesspace-mysql-setup.sql
@@ -146,6 +156,7 @@ function setupFinish {
 #
 # Main
 #
+setupRequiredSoftware
 assertUsername vagrant "Try: sudo su vagrant"
 setupUsers
 setupArchivesSpace
